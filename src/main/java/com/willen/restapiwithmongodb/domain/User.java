@@ -2,7 +2,14 @@ package com.willen.restapiwithmongodb.domain;
 
 import java.io.Serializable;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "User") // Poderia ser somente documento. será mapeado o nome da entidade minuscula
+                               // "user"
 public class User implements Serializable {
+
+    @Id
     private String id;
     private String name;
     private String email;
