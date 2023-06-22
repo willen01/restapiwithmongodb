@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import com.willen.restapiwithmongodb.domain.Post;
 import com.willen.restapiwithmongodb.domain.User;
 import com.willen.restapiwithmongodb.dto.AuthoDTO;
+import com.willen.restapiwithmongodb.dto.CommentDTO;
 import com.willen.restapiwithmongodb.repository.PostRepository;
 import com.willen.restapiwithmongodb.repository.UserRepository;
 
@@ -42,6 +43,13 @@ public class Instantiation implements CommandLineRunner {
         Post post1 = new Post(null, sdf.parse("21/07/2023"), "Partiu viagem", "Vou viajar para são paulo. Abraços!",
                 new AuthoDTO(maria));
         Post post2 = new Post(null, sdf.parse("23/07/2023"), "Bom dia", "Acordei feliz hoje!", new AuthoDTO(maria));
+
+        CommentDTO c1 = new CommentDTO("Boa viagem mano!", sdf.parse("21/08/2023"), new AuthoDTO(alex));
+        CommentDTO c2 = new CommentDTO("Aproveite", sdf.parse("22/08/2023"), new AuthoDTO(bob));
+        CommentDTO c3 = new CommentDTO("Tenha um ótimo dia", sdf.parse("23/08/2023"), new AuthoDTO(alex));
+
+        post1.getComments().addAll(Arrays.asList(c1, c2));
+        post1.getComments().addAll(Arrays.asList(c3));
 
         postRepository.saveAll(Arrays.asList(post1, post2));
 
