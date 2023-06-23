@@ -1,10 +1,12 @@
 package com.willen.restapiwithmongodb.resources;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,4 +36,15 @@ public class PostResource {
         return ResponseEntity.ok().body(list);
     }
 
+    @GetMapping(value = "/fullsearch")
+    public ResponseEntity<List<Post>> fullSearch(
+            @RequestParam(value = "text", defaultValue = "") String text,
+            @RequestParam(value = "minDate", defaultValue = "") String minDate,
+            @RequestParam(value = "maxDate", defaultValue = "") String maxDate) {
+        text = Url.decodePram(text);
+        Date min = Url.convertDate(minDate, new Date(0L));
+        Date max = Url.convertDate(maxDate, new Date());
+        List<Post> list = service.fullSearch(text, min, max);
+        return ResponseEntity.ok().body(list);
+    }
 }
